@@ -1,5 +1,9 @@
 package sample;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 enum Ticket{
     ERMAESSIGT,
     KURZSTRECKE,
@@ -7,11 +11,27 @@ enum Ticket{
 }
 
 enum Geld{
-    ZEHN,
-    ZWAHNZIG,
-    FUENZIG,
-    EINS,
-    ZWEI
+    ZEHN("10 Cent"),
+    ZWAHNZIG("20 Cent"),
+    FUENZIG("50 Cent"),
+    EINS("1 Euro"),
+    ZWEI("2 Euro");
+
+    private String name;
+
+    Geld(String theType) {
+        this.name = theType;
+    }
+
+    static public List toList(){
+        List<Geld> geld = Arrays.asList(Geld.values());
+        return geld;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
 
 public class Ticketautomat {
@@ -20,7 +40,10 @@ public class Ticketautomat {
     private double fahrpreis;
     private double eingezahlt;
 
-    Ticketautomat(){}
+    Ticketautomat(){
+        this.fahrpreis = 0;
+        this.eingezahlt = 0;
+    }
 
     public void ticketAuswahl(String t){
         switch (t){
@@ -91,6 +114,11 @@ public class Ticketautomat {
             default:
                 this.eingezahlt = 0;
         }
+
+    }
+
+    public double calcDiff(){
+        return getEingezahlt() - getFahrpreis();
     }
 
 

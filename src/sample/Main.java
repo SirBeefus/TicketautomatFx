@@ -61,31 +61,35 @@ public class Main extends Application {
         RadioButton rbtn3 = new RadioButton("Normal");
         rbtn3.setToggleGroup(radioGroup);
 
-        btn1.setOnAction(new EventHandler<ActionEvent>() {
+        ObservableList<Geld> options1 = FXCollections.observableList(Geld.toList());
+
+        ComboBox combo = new ComboBox(options1);
+        combo.setValue("10 Cent");
+
+        btn2.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == btn2){
-                    ticket.setEingezahlt();
+                    Geld g = (Geld)combo.getValue();
+                    ticket.setEingezahlt(g);
                     txt2.setText("Eingezahlt: " + ticket.getEingezahlt());
+                }
+            }
+        });
+
+        btn3.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == btn3){
+                    txt3.setText("Differenz: " + ticket.calcDiff());
                 }
             }
         });
 
 
 
-        ObservableList<String> options =
-                FXCollections.observableArrayList(
-                        "10 Cent",
-                        "20 Cent",
-                        "50 Cent",
-                        "1 Euro",
-                        "2 Euro"
-                );
-        ObservableList<Geld> options1 = FXCollections.observableList(Geld.values());
-
-        ComboBox combo = new ComboBox(options);
-        combo.setValue("10 Cent");
 
 
         StackPane root = new StackPane();
